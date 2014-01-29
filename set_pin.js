@@ -9,11 +9,8 @@
 
 var gpio = require('rpi-gpio');
 
-console.log('params: ', process.argv);
-
 var OUTPUT_PIN = parseInt(process.argv[2], 10);
 var value = !!parseInt(process.argv[3], 10);
-
 
 console.log('Setting ' + OUTPUT_PIN + ' to ' + value);
 
