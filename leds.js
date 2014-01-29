@@ -7,8 +7,11 @@
 // 22 -> GP6
 // 7  -> GP7
 
+var fs     = require('fs');
 var gpio = require('rpi-gpio');
 var _ = require('underscore');
+
+var GPIO_PATH = '/sys/class/gpio';
 
 var RED = 11;
 var YELLOW = 12;
@@ -23,6 +26,7 @@ var leds = [
 function init(complete) {
 	leds.forEach(function(led) {
   		gpio.setup(led.pin, gpio.DIR_OUT, function() {
+  			setListener(led.pin);
     		led.ready = true;
     		if(_.any(leds, function(led) { return !led.ready; })) return;
 
@@ -31,13 +35,33 @@ function init(complete) {
 	});
 }
 
+function getLed(pin) {
+	return _.find(leds, function(l) { return l.pin === pin; });
+}
+
 function set(pin, value) {
-	var led = _.find(leds, function(l) { return l.pin === pin; });
+	var led = getLed(pin);
 	if(!led) return;
 
 	led.value = !!value;
 
 	gpio.write(led.pin, led.value);
+}
+
+function setListener(pin) {
+	var path = GPIO_PATH + '/gpio' + gpio.MODE_RPI(pin) + '/value';
+    fs.watch(path, function() {
+    	fs.readFile(path, function(err, data) {
+    		var led = getLed(pin);
+			if(!led) return;
+
+			var newValue = parseInt(data);
+			if(led.value !== newValue) {
+				led.value = newValue;
+				console.log('Pin ' + pin + ' changed to ' + newValue);
+			}
+    	});
+    });
 }
 
 exports.RED = RED;
