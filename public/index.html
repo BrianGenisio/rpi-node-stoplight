@@ -9,6 +9,8 @@
 	<body ng-app="StopLight" ng-controller="StopLightCtrl">
 		<div ng-repeat="led in leds">
 			Pin {{led.pin}}: <input type="checkbox" ng-model="led.value" ng-change="ledUpdated(led)">
-		</div>		
+		</div>	
+
+		<button ng-click="cycle()">Cycle It <span ng-if="cycleCount > 0">({{cycleCount}})</span></button>	
 	</body>
 </html>

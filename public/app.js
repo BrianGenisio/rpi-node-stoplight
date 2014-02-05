@@ -27,4 +27,19 @@ app.controller('StopLightCtrl', function($scope, stopLightService) {
 		stopLightService.setLED(led.pin, led.value);
 	};
 
+	$scope.cycle = function() {
+		$scope.cycleCount = 0;
+		cycleUpdate();
+	};
+
+	function cycleUpdate() {
+		if($scope.cycleCount > 100) return;
+		
+		var led = $scope.leds[$scope.cycleCount++ % $scope.leds.length];
+		led.value = !led.value;
+		stopLightService.setLED(led.pin, led.value);
+
+		setTimeout(cycleUpdate, 100);
+	}
+
 });
