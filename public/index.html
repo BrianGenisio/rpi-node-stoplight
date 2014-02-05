@@ -3,11 +3,12 @@
 		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 		<script src="bower_components/lodash/dist/lodash.min.js"></script>
 		<script src="bower_components/angular/angular.min.js"></script>
+
+		<script src="app.js"></script>
 	</head>
-	<body ng-app>
-		<div class="well">
-			<input type="text" ng-model="test">
-			Test: {{test}}
-		</div>
+	<body ng-app="StopLight" ng-controller="StopLightCtrl">
+		<div ng-repeat="led in leds">
+			Pin {{led.pin}}: <input type="checkbox" ng-model="led.value" ng-change="ledUpdated(led)">
+		</div>		
 	</body>
 </html>
