@@ -1,0 +1,41 @@
+body {
+	text-align: center;
+}
+
+.stoplight {
+	background-color: #291400;
+	display: inline-block;
+	margin: 50px;
+}
+
+.led {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	margin: 15px;
+}
+
+.led.led-11 {
+	background-color: #5A0000;
+}
+
+.led.led-11.on {
+	background-color: #FF3333;
+}
+
+.led.led-12 {
+	background-color: #7A5200;
+}
+
+.led.led-12.on {
+	background-color: #FFCC00;
+}
+
+.led.led-13 {
+	background-color: #333300;
+}
+
+.led.led-13.on {
+	background-color: #00B200;
+}
+
